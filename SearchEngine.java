@@ -36,14 +36,18 @@ class Handler implements URLHandler {
             if (url.getPath().contains("/search")) {
                 String[] parameters = url.getQuery().split("=");
                 String searchResult = "";
+                ArrayList<String> searches = new ArrayList<>();
                 if (parameters[0].equals("s")) {
                     for (String s : strings) {
                         if (s.contains(parameters[1])) {
                             searchResult += s + " ";
+                            searches.add(s);
                         }
                     }
                 }
-                return String.format("Here are your results: %s", searchResult);
+                searchResult = String.join(", ", searches);
+                System.out.println(searchResult);
+                return String.format("Here are your results: { %s }", searchResult);
             }
             return "404 Not Found!";
         }
